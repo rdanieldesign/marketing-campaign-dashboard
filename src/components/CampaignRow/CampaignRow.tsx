@@ -1,25 +1,24 @@
-import type { Campaign } from '../../api/types';
-import { useToggleCampaign } from '../../api/campaigns';
-import { useAppSelector } from '../../store';
-import styles from './CampaignRow.module.css';
+import type { Campaign } from '../../api/types'
+import { useAppSelector } from '../../store'
+import styles from './CampaignRow.module.css'
 
 interface CampaignRowProps {
-  campaign: Campaign;
+  campaign: Campaign
+  onToggleCampaign: (args: { id: string; newStatus: 'active' | 'paused' }) => void
 }
 
-export function CampaignRow({ campaign }: CampaignRowProps) {
-  const { mutate: toggleCampaign } = useToggleCampaign();
-  const isSaving = useAppSelector((state) => state.ui.savingIds.includes(campaign.id));
-  const hasError = useAppSelector((state) => state.ui.errorIds.includes(campaign.id));
+export function CampaignRow({ campaign, onToggleCampaign }: CampaignRowProps) {
+  const isSaving = useAppSelector((state) => state.ui.savingIds[campaign.id])
+  const hasError = useAppSelector((state) => state.ui.errorIds[campaign.id])
 
-  const isOverBudget = campaign.totalSpend > campaign.dailyBudget;
-  const newStatus = campaign.status === 'active' ? 'paused' : 'active';
+  const isOverBudget = campaign.totalSpend > campaign.dailyBudget
+  const newStatus = campaign.status === 'active' ? 'paused' : 'active'
 
   const handleToggle = () => {
     if (!isSaving) {
-      toggleCampaign({ id: campaign.id, newStatus });
+      onToggleCampaign({ id: campaign.id, newStatus })
     }
-  };
+  }
 
   return (
     <div className={`${styles.row} ${hasError ? styles.error : ''}`}>
@@ -42,5 +41,5 @@ export function CampaignRow({ campaign }: CampaignRowProps) {
       </div>
       {hasError && <div className={styles.errorMessage}>Update failed</div>}
     </div>
-  );
+  )
 }

@@ -1,65 +1,59 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface Notification {
-  id: string;
-  message: string;
-  type: 'success' | 'error' | 'info';
+  id: string
+  message: string
+  type: 'success' | 'error' | 'info'
 }
 
 export interface UIState {
-  savingIds: string[];
-  errorIds: string[];
-  notifications: Notification[];
-  simulateError: boolean;
+  savingIds: { [key: string]: boolean }
+  errorIds: { [key: string]: boolean }
+  notifications: Notification[]
+  simulateError: boolean
 }
 
 const initialState: UIState = {
-  savingIds: [],
-  errorIds: [],
+  savingIds: {},
+  errorIds: {},
   notifications: [],
   simulateError: false,
-};
+}
 
 const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
     addSavingId(state, action: PayloadAction<string>) {
-      if (!state.savingIds.includes(action.payload)) {
-        state.savingIds.push(action.payload);
-      }
+      state.savingIds[action.payload] = true
     },
     removeSavingId(state, action: PayloadAction<string>) {
-      state.savingIds = state.savingIds.filter((id) => id !== action.payload);
+      delete state.savingIds[action.payload]
     },
     addErrorId(state, action: PayloadAction<string>) {
-      if (!state.errorIds.includes(action.payload)) {
-        state.errorIds.push(action.payload);
-      }
+      state.errorIds[action.payload] = true
     },
     removeErrorId(state, action: PayloadAction<string>) {
-      state.errorIds = state.errorIds.filter((id) => id !== action.payload);
+      delete state.errorIds[action.payload]
     },
     clearErrors(state) {
-      state.errorIds = [];
+      state.errorIds = {}
     },
     addNotification(state, action: PayloadAction<Notification>) {
-      state.notifications.push(action.payload);
+      state.notifications.push(action.payload)
     },
     removeNotification(state, action: PayloadAction<string>) {
-      state.notifications = state.notifications.filter(
-        (notif) => notif.id !== action.payload
-      );
+      state.notifications = state.notifications.filter((notif) => notif.id !== action.payload)
     },
     clearNotifications(state) {
-      state.notifications = [];
+      state.notifications = []
     },
     setSimulateError(state, action: PayloadAction<boolean>) {
-      state.simulateError = action.payload;
+      state.simulateError = action.payload
     },
   },
-});
+})
 
 export const {
   addSavingId,
@@ -71,6 +65,6 @@ export const {
   removeNotification,
   clearNotifications,
   setSimulateError,
-} = uiSlice.actions;
+} = uiSlice.actions
 
-export default uiSlice.reducer;
+export default uiSlice.reducer

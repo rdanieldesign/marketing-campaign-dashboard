@@ -8,6 +8,7 @@ import {
   addNotification,
   removeErrorId,
 } from '../store/uiSlice'
+import { useMemo } from 'react'
 
 // QueryClient configuration
 export const queryClient = new QueryClient({
@@ -26,7 +27,7 @@ export function useCampaigns() {
   const platformFilter = useAppSelector((state) => state.filters.platformFilter)
   const searchQuery = useAppSelector((state) => state.filters.searchQuery)
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isFetching, dataUpdatedAt } = useQuery({
     queryKey: ['campaigns'],
     queryFn: async () => {
       const response = await fetch('/api/campaigns')
@@ -38,21 +39,27 @@ export function useCampaigns() {
   })
 
   // Apply filters and search client-side
-  const filteredCampaigns = (data || []).filter((campaign) => {
-    if (platformFilter && campaign.platform !== platformFilter) {
-      return false
-    }
-    if (searchQuery && !campaign.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false
-    }
-    return true
-  })
+  const filteredCampaigns = useMemo(
+    () =>
+      (data || []).filter((campaign) => {
+        if (platformFilter && campaign.platform !== platformFilter) {
+          return false
+        }
+        if (searchQuery && !campaign.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+          return false
+        }
+        return true
+      }),
+    [data, platformFilter, searchQuery],
+  )
 
   return {
     campaigns: filteredCampaigns,
     allCampaigns: data || [],
     isLoading,
     error,
+    isFetching,
+    dataUpdatedAt,
   }
 }
 

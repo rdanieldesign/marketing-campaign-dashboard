@@ -1,9 +1,10 @@
-import { useCampaigns } from '../../api/campaigns';
-import { CampaignRow } from '../CampaignRow/CampaignRow';
-import styles from './CampaignList.module.css';
+import { useCampaigns, useToggleCampaign } from '../../api/campaigns'
+import { CampaignRow } from '../CampaignRow/CampaignRow'
+import styles from './CampaignList.module.css'
 
 export function CampaignList() {
-  const { campaigns, isLoading, error } = useCampaigns();
+  const { campaigns, isLoading, error } = useCampaigns()
+  const { mutate: toggleCampaign } = useToggleCampaign()
 
   if (isLoading) {
     return (
@@ -12,7 +13,7 @@ export function CampaignList() {
           <div key={i} className={styles.skeleton} />
         ))}
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -20,7 +21,7 @@ export function CampaignList() {
       <div className={styles.error}>
         <p>Failed to load campaigns. Please try again.</p>
       </div>
-    );
+    )
   }
 
   if (campaigns.length === 0) {
@@ -28,7 +29,7 @@ export function CampaignList() {
       <div className={styles.empty}>
         <p>No campaigns found.</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -43,8 +44,8 @@ export function CampaignList() {
         <div className={styles.action}>Action</div>
       </div>
       {campaigns.map((campaign) => (
-        <CampaignRow key={campaign.id} campaign={campaign} />
+        <CampaignRow key={campaign.id} campaign={campaign} onToggleCampaign={toggleCampaign} />
       ))}
     </div>
-  );
+  )
 }
