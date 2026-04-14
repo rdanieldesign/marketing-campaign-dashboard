@@ -166,4 +166,43 @@ describe('useToggleCampaign', () => {
       expect(toggleResult.current.isPending).toBe(false);
     });
   });
+
+  it('removes error when campaign status update succeeds after previous failure', async () => {
+    // First fetch campaigns
+    const { result: campaignsResult } = renderHook(() => useCampaigns(), { wrapper });
+
+    await waitFor(() => {
+      expect(campaignsResult.current.isLoading).toBe(false);
+    });
+
+    const targetCampaign = campaignsResult.current.allCampaigns[0];
+
+    // Simulate a previous error by manually adding the campaign ID to errorIds
+    act(() => {
+      store.dispatch({ type: 'ui/addErrorId', payload: targetCampaign.id });
+    });
+
+    let stateWithError = store.getState();
+    expect(stateWithError.ui.errorIds).toContain(targetCampaign.id);
+
+    // Now toggle the campaign successfully
+    const { result: toggleResult } = renderHook(() => useToggleCampaign(), { wrapper });
+
+    act(() => {
+      toggleResult.current.mutate({
+        id: targetCampaign.id,
+        newStatus: targetCampaign.status === 'active' ? 'paused' : 'active',
+      });
+    });
+
+    // Wait for mutation to complete and success handler to be called
+    await waitFor(() => {
+      expect(toggleResult.current.isSuccess).toBe(true);
+    });
+
+    // Verify error ID was removed from state after successful mutation
+    const stateAfterSuccess = store.getState();
+    expect(stateAfterSuccess.ui.errorIds).not.toContain(targetCampaign.id);
+    expect(stateAfterSuccess.ui.errorIds.length).toBe(0);
+  });
 });
