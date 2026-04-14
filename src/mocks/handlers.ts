@@ -7,6 +7,11 @@ export let simulateError = false
 // Mutable copy of campaigns for toggling status
 let campaigns = structuredClone(mockCampaigns)
 
+// Function to set simulateError for testing
+export function setSimulateError(value: boolean) {
+  simulateError = value
+}
+
 export const handlers = [
   http.get('/api/campaigns', async () => {
     await delay(300)
