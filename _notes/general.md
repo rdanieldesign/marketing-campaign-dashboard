@@ -1,0 +1,7 @@
+- What is meant by "slice" in redux
+- project organized by tech instead of by step. This is ok for smaller projects but means we can't preview anything. Let's try it
+- forgot to specify the model up front
+- specs, notes, and plans were deleted when app was initialized.
+- Claude did not use the skill to create the planner, need to verify this is done or executation wont work as ecxpected
+- Need to revise planner skill to break things down by functional aspect. The setup phase can be expensive and run by a thinking model
+- Forgot to commit between phases
