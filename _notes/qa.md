@@ -1,5 +1,0 @@
-- dev mode simulate error fails
-- statuses are all the same
-- a11y error with title contrast
-- error state of item never resets
-- budget limit was never defined, status is always the same
