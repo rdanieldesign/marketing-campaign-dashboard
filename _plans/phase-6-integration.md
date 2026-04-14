@@ -2,7 +2,7 @@
 
 ## Checklist
 
-- [ ] Manually verify all 4 PRD success criteria
+- [x] Manually verify all 4 PRD success criteria
 - [x] Remove dead code, console.logs
 - [x] Confirm CSS Module class names don't leak across components
 - [x] `npm run build` — zero TypeScript errors, zero build warnings
