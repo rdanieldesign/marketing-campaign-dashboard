@@ -25,8 +25,9 @@ const filtersSlice = createSlice({
       state.platformFilter = '';
       state.searchQuery = '';
     },
+    reset: () => initialState,
   },
 });
 
-export const { setPlatformFilter, setSearchQuery, clearFilters } = filtersSlice.actions;
+export const { setPlatformFilter, setSearchQuery, clearFilters, reset: resetFilters } = filtersSlice.actions;
 export default filtersSlice.reducer;

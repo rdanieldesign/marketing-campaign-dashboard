@@ -5,6 +5,8 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { useCampaigns, useToggleCampaign, queryClient } from './campaigns'
 import { store } from '../store'
 import { mockCampaigns } from '../mocks/data'
+import { resetUI } from '../store/uiSlice'
+import { resetFilters } from '../store/filtersSlice'
 
 // Helper to wrap hooks with providers
 const wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -16,6 +18,8 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 describe('useCampaigns', () => {
   beforeEach(() => {
     queryClient.clear()
+    store.dispatch(resetUI())
+    store.dispatch(resetFilters())
   })
 
   it('fetches all campaigns on mount', async () => {
@@ -92,6 +96,8 @@ describe('useCampaigns', () => {
 describe('useToggleCampaign', () => {
   beforeEach(() => {
     queryClient.clear()
+    store.dispatch(resetUI())
+    store.dispatch(resetFilters())
   })
 
   it('toggles campaign status with optimistic update and persists', async () => {

@@ -52,6 +52,7 @@ const uiSlice = createSlice({
     setSimulateError(state, action: PayloadAction<boolean>) {
       state.simulateError = action.payload
     },
+    reset: () => initialState,
   },
 })
 
@@ -65,6 +66,7 @@ export const {
   removeNotification,
   clearNotifications,
   setSimulateError,
+  reset: resetUI,
 } = uiSlice.actions
 
 export default uiSlice.reducer
