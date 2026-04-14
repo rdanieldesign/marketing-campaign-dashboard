@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import filtersReducer, { setPlatformFilter, setSearchQuery, clearFilters, FiltersState } from './filtersSlice';
+import filtersReducer, { setPlatformFilter, setSearchQuery, clearFilters } from './filtersSlice';
+import type { FiltersState } from './filtersSlice';
 
 describe('filtersSlice', () => {
   const initialState: FiltersState = {

@@ -9,9 +9,8 @@ import uiReducer, {
   removeNotification,
   clearNotifications,
   setSimulateError,
-  UIState,
-  Notification,
 } from './uiSlice';
+import type { UIState, Notification } from './uiSlice';
 
 describe('uiSlice', () => {
   const initialState: UIState = {

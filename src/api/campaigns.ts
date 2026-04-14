@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
-import { Campaign } from './types';
+import type { Campaign } from './types';
 import { useAppDispatch, useAppSelector } from '../store';
-import { addSavingId, removeSavingId, addErrorId, removeErrorId, addNotification } from '../store/uiSlice';
+import { addSavingId, removeSavingId, addErrorId, addNotification } from '../store/uiSlice';
 
 // QueryClient configuration
 export const queryClient = new QueryClient({
@@ -17,7 +17,6 @@ export const queryClient = new QueryClient({
  * Fetches all campaigns from the API
  */
 export function useCampaigns() {
-  const dispatch = useAppDispatch();
   const platformFilter = useAppSelector((state) => state.filters.platformFilter);
   const searchQuery = useAppSelector((state) => state.filters.searchQuery);
 
