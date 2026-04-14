@@ -17,7 +17,7 @@ export function DevControls() {
 
   return (
     <div className={styles.panel}>
-      <h3 className={styles.title}>Dev Controls</h3>
+      <h2 className={styles.title}>Dev Controls</h2>
       <label className={styles.checkboxLabel}>
         <input
           type="checkbox"

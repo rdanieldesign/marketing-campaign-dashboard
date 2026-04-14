@@ -5,3 +5,10 @@
 - Claude did not use the skill to create the planner, need to verify this is done or executation wont work as ecxpected
 - Need to revise planner skill to break things down by functional aspect. The setup phase can be expensive and run by a thinking model
 - Forgot to commit between phases
+- if we are going to add e2e tests, need to wait until later phases to keep up speed and have full flow to test
+- check on "npm test" in allowRules
+  - cd && git status
+- don't really need checkboxes in the master plan, this might cause confusion/overthinking
+- forgot to gitignore the notes/specs/plans
+- Only used 66% of session tokens
+- need to figure out more natural breaks to look at code while Claude is working
